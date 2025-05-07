@@ -60,28 +60,28 @@
             const container = document.getElementById("title");
             container.innerHTML = "_"; // Start with just the cursor
             index = 0;
-            typeTitle(titleText);
+            typeTitle();
         }
 
-        function typeTitle(text) {
+        function typeTitle() {
             const container = document.getElementById("title");
 
-            if (titleIndex < text.length) {
+            if (titleIndex < titleText.length) {
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
-                container.innerHTML += (text[titleIndex] === "\n" ? "<br>" : text[titleIndex]) + "_"; // Add next letter + cursor
+                container.innerHTML += (titleText[titleIndex] === "\n" ? "<br>" : titleText[titleIndex]) + "_"; // Add next letter + cursor
                 titleIndex++;
                 console.log(titleIndex);
                 setTimeout(typeTitle, speed);
             } else {
-                typeDescrition(description);
+                typeDescrition();
             }
         }
-        function typeDescription(text) {
+        function typeDescription() {
             const container = document.getElementById("desc");
 
-            if (descriptionIndex < text.length) {
+            if (descriptionIndex < description.length) {
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
-                container.innerHTML += (text[descriptionIndex] === "\n" ? "<br>" : text[descriptionIndex]) + "_"; // Add next letter + cursor
+                container.innerHTML += (description[descriptionIndex] === "\n" ? "<br>" : description[descriptionIndex]) + "_"; // Add next letter + cursor
                 descriptionIndex++;
                 console.log(descriptionIndex);
                 setTimeout(typeDescription, speed);
