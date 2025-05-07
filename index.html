@@ -32,7 +32,10 @@
 </head>
 
 <body>
-    <div id="typewriter-text" style=""></div>
+    <div id="text" onload="startTyping()">
+        <h id="title"></h>
+        <p id="desc"></p>
+    </div>
     <div id="options1" style="display: none;">
     </div>
     
@@ -40,20 +43,32 @@
         let text = "";
         let index = 0;
         let core = "";
-        var intro = "Hi! I'm Troy. \n I'm a high school developer and tech nerd. Feel free to look around.";
+        var titleText = "Hi! I'm Troy Kinney.";
+        var description = "I'm a high school developer and tech nerd. Feel free to look around.";
         const speed = 50; // Typing speed in milliseconds
 
         function startTyping() {
-            document.getElementById("start-screen").style.display = "none";
-            document.getElementById("typewriter-text").style.display = "block";
-            const container = document.getElementById("typewriter-text");
+            const container = document.getElementById("title");
             container.innerHTML = "_"; // Start with just the cursor
             index = 0;
-            typeCharacter(intro);
+            typeTitle(titleText);
         }
 
-        function typeCharacter(text) {
-            const container = document.getElementById("typewriter-text");
+        function typeTile(text) {
+            const container = document.getElementById("title");
+
+            if (index < text.length) {
+                container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
+                container.innerHTML += (text[index] === "\n" ? "<br>" : text[index]) + "_"; // Add next letter + cursor
+                index++;
+                console.log(index);
+                setTimeout(typeCharacter, speed);
+            } else {
+                typeDescrition(description);
+            }
+        }
+        function typeDescription(text) {
+            const container = document.getElementById("desc");
 
             if (index < text.length) {
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
