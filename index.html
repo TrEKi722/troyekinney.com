@@ -47,7 +47,8 @@
     
     <script>
         let text = "";
-        let index = 0;
+        let titleIndex = 0;
+        let descriptionIndex = 0;
         let core = "";
         var titleText = "Hi! I'm Troy Kinney.";
         var description = "I'm a high school developer and tech nerd. Feel free to look around.";
@@ -55,21 +56,22 @@
         window.onload=startTyping;
         
         function startTyping() {
+            console.log("startTyping Run");
             const container = document.getElementById("title");
             container.innerHTML = "_"; // Start with just the cursor
             index = 0;
             typeTitle(titleText);
         }
 
-        function typeTile(text) {
+        function typeTitle(text) {
             const container = document.getElementById("title");
 
-            if (index < text.length) {
+            if (titleIndex < text.length) {
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
-                container.innerHTML += (text[index] === "\n" ? "<br>" : text[index]) + "_"; // Add next letter + cursor
-                index++;
-                console.log(index);
-                setTimeout(typeCharacter, speed);
+                container.innerHTML += (text[titleIndex] === "\n" ? "<br>" : text[titleIndex]) + "_"; // Add next letter + cursor
+                titleIndex++;
+                console.log(titleIndex);
+                setTimeout(typeTitle, speed);
             } else {
                 typeDescrition(description);
             }
@@ -77,24 +79,24 @@
         function typeDescription(text) {
             const container = document.getElementById("desc");
 
-            if (index < text.length) {
+            if (descriptionIndex < text.length) {
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
-                container.innerHTML += (text[index] === "\n" ? "<br>" : text[index]) + "_"; // Add next letter + cursor
-                index++;
-                console.log(index);
-                setTimeout(typeCharacter, speed);
+                container.innerHTML += (text[descriptionIndex] === "\n" ? "<br>" : text[descriptionIndex]) + "_"; // Add next letter + cursor
+                descriptionIndex++;
+                console.log(descriptionIndex);
+                setTimeout(typeDescription, speed);
             } else {
                 remove();
             }
         }
         
         function remove() {
-            document.getElementById("typewriter-text").innerHTML = document.getElementById("typewriter-text").innerHTML.slice(0, -1); // Remove previous "_"
+            document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1); // Remove previous "_"
             setTimeout(add, 500);
         }
         
         function add() {
-            document.getElementById("typewriter-text").innerHTML += "_"; // Add next letter + cursor
+            document.getElementById("desc").innerHTML += "_"; // Add next letter + cursor
             setTimeout(remove, 500);
         }
 
