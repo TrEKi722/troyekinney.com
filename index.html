@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <div id="text" onload="startTyping()">
+    <div id="text">
         <h id="title"></h>
         <p id="desc"></p>
     </div>
@@ -46,7 +46,8 @@
         var titleText = "Hi! I'm Troy Kinney.";
         var description = "I'm a high school developer and tech nerd. Feel free to look around.";
         const speed = 50; // Typing speed in milliseconds
-
+        startTyping();
+        
         function startTyping() {
             const container = document.getElementById("title");
             container.innerHTML = "_"; // Start with just the cursor
