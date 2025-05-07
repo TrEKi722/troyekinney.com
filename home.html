@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: black;
+            color: green;
+            font-family: 'Courier Prime', monospace;
+            padding: 45px;
+        }
+        
+        button{
+            border-color: green;
+            font-family: 'Courier Prime', monospace;
+            font-size: 55px;
+            color: green;
+            padding: 20px;
+            background-color: black;
+        }
+        
+        .typewriter {
+            font-size: 18pt;
+            white-space: pre-wrap;
+            overflow: hidden;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="typewriter-text" style=""></div>
+    <div id="options1" style="display: none;">
+    </div>
+    
+    <script>
+        let text = "";
+        let index = 0;
+        let core = "";
+        var intro = "Hi! I'm Troy. \n I'm a high school developer and tech nerd. Feel free to look around.";
+        const speed = 50; // Typing speed in milliseconds
+
+        function startTyping() {
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("typewriter-text").style.display = "block";
+            const container = document.getElementById("typewriter-text");
+            container.innerHTML = "_"; // Start with just the cursor
+            index = 0;
+            typeCharacter(intro);
+        }
+
+        function typeCharacter(text) {
+            const container = document.getElementById("typewriter-text");
+
+            if (index < text.length) {
+                container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
+                container.innerHTML += (text[index] === "\n" ? "<br>" : text[index]) + "_"; // Add next letter + cursor
+                index++;
+                console.log(index);
+                setTimeout(typeCharacter, speed);
+            } else {
+                remove();
+            }
+        }
+        
+        function remove() {
+            document.getElementById("typewriter-text").innerHTML = document.getElementById("typewriter-text").innerHTML.slice(0, -1); // Remove previous "_"
+            setTimeout(add, 500);
+        }
+        
+        function add() {
+            document.getElementById("typewriter-text").innerHTML += "_"; // Add next letter + cursor
+            setTimeout(remove, 500);
+        }
+
+    </script>
+</body>
+</html>
