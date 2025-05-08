@@ -1,122 +1,146 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
-    
-    
-    <style>
-        body {
-            background-color: black;
-            color: green;
-            font-family: 'Lexend Deca', sans-serif;
-            font-weight: 350;
-            padding: 45px;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: green;
+      font-family: 'Lexend Deca', sans-serif;
+      font-weight: 350;
+      padding: 45px;
+      margin: 0;
+    }
 
-        h1 {
-            color: green;
-            font-family: 'Lexend Deca', sans-serif;
-            font-weight: 525;
-            font-size: 24px;
-        }
-        
-        button{
-            border-color: green;
-            font-family: "Funnel Sans", sans-serif;
-            font-size: 33px;
-            color: black;
-            padding: 20px;
-            background-color: black;
-        }
-        
-        .typewriter {
-            font-size: 18pt;
-            white-space: pre-wrap;
-            overflow: hidden;
-            display: inline-block;
-        }
-        .wrapper {
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center;     /* Center vertically */
-            height:100%;
-        }
-    </style>
+    h1 {
+      color: green;
+      font-family: 'Lexend Deca', sans-serif;
+      font-weight: 525;
+      font-size: 24px;
+    }
+
+    button {
+      border-color: green;
+      font-family: "Funnel Sans", sans-serif;
+      font-size: 33px;
+      color: black;
+      padding: 20px;
+      background-color: black;
+    }
+
+    .typewriter {
+      font-size: 18pt;
+      white-space: pre-wrap;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+
+    #ascii-art {
+      font-family: 'Courier Prime', monospace;
+      white-space: pre;
+      overflow-x: auto;
+      overflow-y: auto;
+      max-width: 100%;
+      max-height: 600px;
+      font-size: 6px;
+      line-height: 1.1;
+      margin-top: 20px;
+      border: 1px solid green;
+      padding: 10px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div id="text" style="width:100%;">
-            <h1 id="title" style="text-align:center;"></h1>
-            <p id="desc" style="text-align:center;"></p>
-        </div>
-        <iframe src="troy.txt" width="100%" height="300" style="border:none; font-family: monospace;"></iframe>
-        <div id="options" style="display: none;">
-            <button>Work</button>
-            <button>Involvements</button>
-            <button>Philosophy</button>
-            <button>Resume</button>
-            <button>References</button>
-        </div>
+  <div class="wrapper">
+    <div id="text" style="width:100%;">
+      <h1 id="title" style="text-align:center;"></h1>
+      <p id="desc" style="text-align:center;"></p>
     </div>
-    <script>
-        let text = "";
-        let titleIndex = 0;
-        let descriptionIndex = 0;
-        let core = "";
-        var titleText = "Hi! I'm Troy Kinney.";
-        var description = "I'm a high school developer and tech nerd. Feel free to look around.";
-        const speed = 50; // Typing speed in milliseconds
-        window.onload=startTyping;
-        
-        function startTyping() {
-            console.log("startTyping Run");
-            const container = document.getElementById("title");
-            container.innerHTML = "_"; // Start with just the cursor
-            index = 0;
-            typeTitle();
-        }
+    <pre id="ascii-art">Loading ASCII art...</pre>
+    <div id="options" style="display: none;">
+      <button>Work</button>
+      <button>Involvements</button>
+      <button>Philosophy</button>
+      <button>Resume</button>
+      <button>References</button>
+    </div>
+  </div>
 
-        function typeTitle() {
-            const container = document.getElementById("title");
+  <script>
+    const asciiContainer = document.getElementById('ascii-art');
+    fetch('https://raw.githubusercontent.com/TrEKi722/troyekinney.com/main/troy.txt')
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+      })
+      .then(data => {
+        asciiContainer.textContent = data;
+      })
+      .catch(error => {
+        asciiContainer.textContent = 'Failed to load ASCII art.';
+        console.error('Fetch error:', error);
+      });
 
-            if (titleIndex < titleText.length) {
-                container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
-                container.innerHTML += (titleText[titleIndex] === "\n" ? "<br>" : titleText[titleIndex]) + "_"; // Add next letter + cursor
-                titleIndex++;
-                setTimeout(typeTitle, speed);
-            } else {
-                container.innerHTML = container.innerHTML.slice(0, -1);
-                typeDescription();
-            }
-        }
-        function typeDescription() {
-            const container = document.getElementById("desc");
+    let titleIndex = 0;
+    let descriptionIndex = 0;
+    var titleText = "Hi! I'm Troy Kinney.";
+    var description = "I'm a high school developer and tech nerd. Feel free to look around.";
+    const speed = 50;
 
-            if (descriptionIndex < description.length) {
-                container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
-                container.innerHTML += (description[descriptionIndex] === "\n" ? "<br>" : description[descriptionIndex]) + "_"; // Add next letter + cursor
-                descriptionIndex++;
-                setTimeout(typeDescription, speed);
-            } else {
-                document.getElementById("options").style.display = "inline-block";
-                remove();
-            }
-        }
-        
-        function remove() {
-            document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1); // Remove previous "_"
-            setTimeout(add, 500);
-        }
-        
-        function add() {
-            document.getElementById("desc").innerHTML += "_"; // Add next letter + cursor
-            setTimeout(remove, 500);
-        }
+    window.onload = startTyping;
 
-    </script>
+    function startTyping() {
+      const container = document.getElementById("title");
+      container.innerHTML = "_";
+      typeTitle();
+    }
+
+    function typeTitle() {
+      const container = document.getElementById("title");
+      if (titleIndex < titleText.length) {
+        container.innerHTML = container.innerHTML.slice(0, -1);
+        container.innerHTML += (titleText[titleIndex] === "\n" ? "<br>" : titleText[titleIndex]) + "_";
+        titleIndex++;
+        setTimeout(typeTitle, speed);
+      } else {
+        container.innerHTML = container.innerHTML.slice(0, -1);
+        typeDescription();
+      }
+    }
+
+    function typeDescription() {
+      const container = document.getElementById("desc");
+      if (descriptionIndex < description.length) {
+        container.innerHTML = container.innerHTML.slice(0, -1);
+        container.innerHTML += (description[descriptionIndex] === "\n" ? "<br>" : description[descriptionIndex]) + "_";
+        descriptionIndex++;
+        setTimeout(typeDescription, speed);
+      } else {
+        document.getElementById("options").style.display = "inline-block";
+        remove();
+      }
+    }
+
+    function remove() {
+      document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
+      setTimeout(add, 500);
+    }
+
+    function add() {
+      document.getElementById("desc").innerHTML += "_";
+      setTimeout(remove, 500);
+    }
+  </script>
 </body>
 </html>
