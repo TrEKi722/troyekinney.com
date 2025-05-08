@@ -34,17 +34,23 @@
             overflow: hidden;
             display: inline-block;
         }
+        .wrapper {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;     /* Center vertically */
+        }
     </style>
 </head>
 
 <body>
-    <div id="text">
-        <h1 id="title"></h1>
-        <p id="desc"></p>
+    <div class="wrapper">
+        <div id="text">
+            <h1 id="title"></h1>
+            <p id="desc"></p>
+        </div>
+        <div id="options" style="display: none;">
+        </div>
     </div>
-    <div id="options1" style="display: none;">
-    </div>
-    
     <script>
         let text = "";
         let titleIndex = 0;
@@ -70,9 +76,9 @@
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
                 container.innerHTML += (titleText[titleIndex] === "\n" ? "<br>" : titleText[titleIndex]) + "_"; // Add next letter + cursor
                 titleIndex++;
-                console.log(titleIndex);
                 setTimeout(typeTitle, speed);
             } else {
+                container.innerHTML = container.innerHTML.slice(0, -1);
                 typeDescription();
             }
         }
@@ -83,9 +89,9 @@
                 container.innerHTML = container.innerHTML.slice(0, -1); // Remove previous "_"
                 container.innerHTML += (description[descriptionIndex] === "\n" ? "<br>" : description[descriptionIndex]) + "_"; // Add next letter + cursor
                 descriptionIndex++;
-                console.log(descriptionIndex);
                 setTimeout(typeDescription, speed);
             } else {
+                document.getElementById("options").style.display = "inline-block";
                 remove();
             }
         }
