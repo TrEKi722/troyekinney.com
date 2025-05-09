@@ -33,6 +33,31 @@
       background-color: black;
     }
 
+    button:hover {
+      background-color: green;
+      color: black;
+      box-shadow: 0 0 8px green, 0 0 16px green;
+      transition: all 0.2s ease;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 255, 0, 0.03) 0px,
+        rgba(0, 255, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 999;
+    }
+
     .typewriter {
       font-size: 18pt;
       white-space: pre-wrap;
