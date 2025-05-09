@@ -58,6 +58,17 @@
       z-index: 999;
     }
 
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.8s ease-in forwards;
+    }
+    
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    
     .typewriter {
       font-size: 18pt;
       white-space: pre-wrap;
@@ -108,34 +119,55 @@
   </div>
 
   <script>
-    const asciiContainer = document.getElementById('ascii-art');
-    fetch('https://raw.githubusercontent.com/TrEKi722/troyekinney.com/main/troy.txt')
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.text();
-      })
-      .then(data => {
-        asciiContainer.textContent = data;
-      })
-      .catch(error => {
-        asciiContainer.textContent = 'Failed to load ASCII art.';
-        console.error('Fetch error:', error);
-      });
-
+    const referrer = document.referrer;
+    const currentHost = window.location.host;
+    const internalRef = referrer && new URL(referrer).host === currentHost;
+  
+    const titleText = "Hi! I'm Troy Kinney.";
+    const description = "I'm a high school developer and tech nerd. Feel free to look around.";
+    const speed = 25;
+  
     let titleIndex = 0;
     let descriptionIndex = 0;
-    var titleText = "Hi! I'm Troy Kinney.";
-    var description = "I'm a high school developer and tech nerd. Feel free to look around.";
-    const speed = 25;
-
-    window.onload = startTyping;
-
+  
+    window.onload = () => {
+      if (internalRef) {
+        const titleEl = document.getElementById("title");
+        const descEl = document.getElementById("desc");
+        const optionsEl = document.getElementById("options");
+    
+        titleEl.textContent = titleText;
+        descEl.textContent = description;
+        
+        titleEl.classList.add("fade-in");
+        descEl.classList.add("fade-in");
+        optionsEl.style.display = "inline-block";
+        optionsEl.classList.add("fade-in");
+      } else {
+        startTyping();
+      }
+    
+      const asciiContainer = document.getElementById('ascii-art');
+      fetch('https://raw.githubusercontent.com/TrEKi722/troyekinney.com/main/troy.txt')
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
+        .then(data => {
+          asciiContainer.textContent = data;
+        })
+        .catch(error => {
+          asciiContainer.textContent = 'Failed to load ASCII art.';
+          console.error('Fetch error:', error);
+        });
+    };
+  
     function startTyping() {
       const container = document.getElementById("title");
       container.innerHTML = "_";
       typeTitle();
     }
-
+  
     function typeTitle() {
       const container = document.getElementById("title");
       if (titleIndex < titleText.length) {
@@ -148,7 +180,7 @@
         typeDescription();
       }
     }
-
+  
     function typeDescription() {
       const container = document.getElementById("desc");
       if (descriptionIndex < description.length) {
@@ -161,7 +193,6 @@
         document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
       }
     }
-
   </script>
 </body>
 </html>
