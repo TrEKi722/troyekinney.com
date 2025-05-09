@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troy E. Kinney - Work</title>
+    <style>
+        :root {
+            --bg-color-light: #ffffff;
+            --text-color-light: #000000;
+            --bg-color-dark: #black;
+            --text-color-dark: #green;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: var(--bg-color-dark);
+                color: var(--text-color-dark);
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        section {
+            margin-bottom: 1.5rem;
+        }
+
+        .button-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .toggle-button, .home-button {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="toggle-button" onclick="toggleDarkMode()">Toggle Theme</button>
+        <button class="home-button" onclick="window.location.href = 'https://www.troyekinney.com';">Return Home</button>
+    </div>
+  
+    <section>
+        <p><strong>Oakhouse Church</strong>
+        Setup Ubiquiti UniFi networking for full coverage Wi-Fi and GbE networking \n Designs lighting, slides, and audio for services</p>
+        
+        <p><strong>ASB Tech Team, Aliso Niguel HS</strong>
+        Create new processes for events such as football games or pep rallies \n Created new documentation to make everything accesible for those to come after me</p>
+      
+        <p><strong>Smart Power Distro Unit (In Progress)</strong><br>
+        Work to design a high-powered power distrobution unit with two others on the ASB Tech Team at Aliso Niguel HS.</p>
+
+        <p><strong>Lorelobby</strong><br>
+        Interactive lorefinding game sent via text message, hosted via github.</p>
+
+        <p><strong>Personal Website</strong> — <a href="https://troyekinney.com">troyekinney.com</a><br>
+        This portfolio is a great example of my work, I code & design.</p>
+    </section>    
+  
+    <script>
+        // Check system preference on load
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+        }
+    
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
