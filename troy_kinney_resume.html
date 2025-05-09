@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troy E. Kinney - Resume</title>
+    <style>
+        :root {
+            --bg-color-light: #ffffff;
+            --text-color-light: #000000;
+            --bg-color-dark: #121212;
+            --text-color-dark: #f0f0f0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        section {
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 0.5rem 1rem;
+            background: none;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-button" onclick="toggleDarkMode()">Toggle Theme</button>
+    <header>
+        <h1>Troy E. Kinney</h1>
+        <p><a href="mailto:troy@ekinney.com">troy@ekinney.com</a> • (949) 350-3907 • <a href="https://troyekinney.com">troyekinney.com</a></p>
+    </header>
+
+    <section>
+        <h2>Education</h2>
+        <p><strong>Aliso Niguel High School</strong> — Sophomore<br>Graduating Class of 2027</p>
+    </section>
+
+    <section>
+        <h2>Experience</h2>
+        <p><strong>Oakhouse Church</strong> — Audio & Lighting Tech<br><em>2023–Present</em><br>
+        Operate sound, lighting, and projection systems for weekly services. Troubleshoot Shure SLXD wireless mics, run Onyx for lighting control, and assist with livestream tech. Provide support for AV setup, teardown, and stage management.</p>
+        
+        <p><strong>ASB Tech Team, Aliso Niguel HS</strong> — AV Operator<br><em>2023–Present</em><br>
+        Mix audio, run lights, and manage technical systems for school events. Coordinate with student leadership to execute assemblies, rallies, and productions.</p>
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+        <p><strong>Smart Power Distro Unit (In Progress)</strong><br>
+        Designing an ESP32-powered rackmount distro with touchscreen interface and 6x 20A circuit monitoring. Includes live amp/watt readout, system logs, and interactive UI.</p>
+
+        <p><strong>LoreSearch Web Game</strong><br>
+        Built a typewriter-style interactive clue game using JavaScript and JSON. Integrated dynamic routing, character lore, and a clue-based map interface.</p>
+
+        <p><strong>Personal Website</strong> — <a href="https://troyekinney.com">troyekinney.com</a><br>
+        Built and deployed portfolio using GitHub Pages and Cloudflare. Implemented custom styling, domain configuration, and dynamic content architecture.</p>
+    </section>
+
+    <section>
+        <h2>Skills</h2>
+        <ul>
+            <li>Live Audio (Behringer WING, X32, Allen & Heath SQ7)</li>
+            <li>Lighting Design (Chauvet, Onyx, DMX)</li>
+            <li>Web Development (HTML, CSS, JavaScript, GitHub)</li>
+            <li>Soldering, rack design, touch UI integration</li>
+            <li>Event setup, crowd experience, creative tech design</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Awards</h2>
+        <ul>
+            <li>Student of the Year, AVID 8th Grade</li>
+            <li>Top Performer, AP Computer Science Principles</li>
+            <li>Additional academic recognition across multiple subjects</li>
+        </ul>
+    </section>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
