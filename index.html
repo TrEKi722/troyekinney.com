@@ -49,7 +49,7 @@
       font-family: 'Courier Prime', monospace;
       white-space: pre;
       overflow: auto;
-      max-width: 100%;
+      max-width: 250ch;
       max-height: 80vh;
       font-size: 4px;         /* Shrinks the characters horizontally */
       line-height: 3.5px;     /* Shrinks them vertically to match width */
@@ -67,7 +67,9 @@
       <h1 id="title" style="text-align:center;"></h1>
       <p id="desc" style="text-align:center;"></p>
     </div>
-    <!-- <pre id="ascii-art">Loading ASCII art...</pre> -->
+    <div id="asciiContainer">
+      <iframe class="ascii-art" src=troy.txt>
+    </div>
     <div id="options" style="display: none;">
       <button>Work</button>
       <button>Involvements</button>
