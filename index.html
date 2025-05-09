@@ -130,19 +130,10 @@
         setTimeout(typeDescription, speed);
       } else {
         document.getElementById("options").style.display = "inline-block";
-        remove();
+        document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
       }
     }
 
-    function remove() {
-      document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
-      setTimeout(add, 500);
-    }
-
-    function add() {
-      document.getElementById("desc").innerHTML += "_";
-      setTimeout(remove, 500);
-    }
   </script>
 </body>
 </html>
