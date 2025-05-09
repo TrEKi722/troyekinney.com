@@ -13,6 +13,13 @@
             --text-color-dark: #f0f0f0;
         }
 
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: var(--bg-color-dark);
+                color: var(--text-color-dark);
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -55,10 +62,21 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .home-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 0.5rem 1rem;
+            background: none;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <button class="toggle-button" onclick="toggleDarkMode()">Toggle Theme</button>
+    <button class="home-button" onclick="window.location.href = 'https://www.troyekinney.com';">Return Home</button>
     <header>
         <h1>Troy E. Kinney</h1>
         <p><a href="mailto:troy@ekinney.com">troy@ekinney.com</a> • (949) 350-3907 • <a href="https://www.troyekinney.com">troyekinney.com</a></p>
