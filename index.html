@@ -12,7 +12,7 @@
       font-family: 'Lexend Deca', sans-serif;
       font-weight: 350;
       font-size: 25px;
-      padding: 45px;
+      padding: 0;
       margin: 0;
     }
 
@@ -22,7 +22,7 @@
       font-weight: 525;
       font-size: 40px;
     }
-
+    
     button {
       border-color: green;
       font-family: "Funnel Sans", sans-serif;
@@ -58,6 +58,12 @@
       z-index: 999;
     }
 
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
     .fade-in {
       opacity: 0;
       animation: fadeIn 0.8s ease-in forwards;
@@ -77,11 +83,13 @@
     }
 
     .wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
 
     #ascii-art {
