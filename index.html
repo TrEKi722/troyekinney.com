@@ -120,12 +120,15 @@
     <div id="options" style="display: none; padding:50px;">
       <button onclick="window.location.href = 'https://www.troyekinney.com/work.html';">Work</button>
       <button onclick="window.location.href = 'https://www.troyekinney.com/involvements.html';">Involvements</button>
-      <button onclick="window.location.href = 'https://www.troyekinney.com/philosophy.html';">Philosophy</button>
+      <button onclick="contentDeterminer('philosphy')">Philosophy</button>
       <button onclick="window.location.href = 'https://www.troyekinney.com/resume.html';">Resume</button>
-      <button onclick="window.location.href = 'https://www.troyekinney.com/references.html';">References</button>
+      <button onclick="contentDeterminer('references')">References</button>
     </div>
   </div>
-
+  <div id="contentContainer">
+    <p id="content" style="text-align:center;"></p>
+  </div>
+  
   <script>
     const referrer = document.referrer;
     const currentHost = window.location.host;
@@ -133,10 +136,14 @@
   
     const titleText = "Hi! I'm Troy Kinney.";
     const description = "I'm a high school developer and tech nerd. Feel free to look around.";
-    const speed = 25;
+
+    const philosophyText = "";
+    
+    const speed = 35;
   
     let titleIndex = 0;
     let descriptionIndex = 0;
+    let contentIndex = 0;
   
     window.onload = () => {
       if (internalRef) {
@@ -199,6 +206,27 @@
       } else {
         document.getElementById("options").style.display = "inline-block";
         document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
+      }
+    }
+
+    function contentDeterminer(section) {
+      contentIndex = 0;
+      if section === "philosophy" {
+        typeContent(philosophyText);
+      } else if section === "references" {
+        typeContent(referencesText);
+      }
+    }
+
+    function typeContent(content) {
+      const container = document.getElementById("content");
+      if (contentIndex < content.length) {
+        container.innerHTML = container.innerHTML.slice(0, -1);
+        container.innerHTML += (content[contentIndex] === "\n" ? "<br>" : content[contentIndex]) + "_";
+        contentIndex++;
+        setTimeout(typeContent, speed);
+      } else {
+        document.getElementById("content").innerHTML = document.getElementById("content").innerHTML.slice(0, -1);
       }
     }
   </script>
