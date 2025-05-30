@@ -29,7 +29,7 @@
       font-size: 30px;
       color: green;
       padding: 20px;
-      margin: 20px;
+      margin: 210px;
       background-color: black;
     }
 
@@ -124,10 +124,12 @@
       <button onclick="window.location.href = 'https://www.troyekinney.com/resume.html';">Resume</button>
       <button onclick="contentDeterminer('references')">References</button>
     </div>
+    <br>
+    <div id="contentContainer">
+      <p id="content" style="text-align:center; display:none;"></p>
+    </div>
   </div>
-  <div id="contentContainer">
-    <p id="content" style="text-align:center; display:none;"></p>
-  </div>
+
   
   <script>
     const referrer = document.referrer;
