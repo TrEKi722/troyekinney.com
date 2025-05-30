@@ -29,7 +29,7 @@
       font-size: 30px;
       color: green;
       padding: 20px;
-      margins: 20px;
+      margin: 20px;
       background-color: black;
     }
 
@@ -126,7 +126,7 @@
     </div>
   </div>
   <div id="contentContainer">
-    <p id="content" style="text-align:center;"></p>
+    <p id="content" style="text-align:center; display:none;"></p>
   </div>
   
   <script>
@@ -163,19 +163,19 @@
         startTyping();
       }
     
-      const asciiContainer = document.getElementById('ascii-art');
-      fetch('https://raw.githubusercontent.com/TrEKi722/troyekinney.com/main/troy.txt')
-        .then(response => {
-          if (!response.ok) throw new Error('Network response was not ok');
-          return response.text();
-        })
-        .then(data => {
-          asciiContainer.textContent = data;
-        })
-        .catch(error => {
-          asciiContainer.textContent = 'Failed to load ASCII art.';
-          console.error('Fetch error:', error);
-        });
+      // const asciiContainer = document.getElementById('ascii-art');
+      // fetch('https://raw.githubusercontent.com/TrEKi722/troyekinney.com/main/troy.txt')
+      //   .then(response => {
+      //     if (!response.ok) throw new Error('Network response was not ok');
+      //     return response.text();
+      //   })
+      //   .then(data => {
+      //     asciiContainer.textContent = data;
+      //   })
+      //   .catch(error => {
+      //     asciiContainer.textContent = 'Failed to load ASCII art.';
+      //     console.error('Fetch error:', error);
+      //   });
     };
   
     function startTyping() {
@@ -212,6 +212,8 @@
 
     function contentDeterminer(section) {
       contentIndex = 0;
+      document.getElementById("content").innerHTML = "";
+      document.getElementById("content").style.display = "inline-block";
       if (section === "philosophy") {
         typeContent(philosophyText);
       } else if (section === "references") {
