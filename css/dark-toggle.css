@@ -1,0 +1,66 @@
+:root {
+    --bg-color-light: #ffffff;
+    --text-color-light: #000000;
+    --bg-color-dark: #121212;
+    --text-color-dark: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--bg-color-dark);
+        color: var(--text-color-dark);
+    .toggle-button, .home-button {
+        color: var(--text-color-dark);
+    }
+    }
+}
+
+.toggle-button, .home-button {
+    padding: 0.5rem 1rem;
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-color-light);
+    transition: color 0.3s;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 2rem;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+}
+
+section {
+    margin-bottom: 1.5rem;
+}
+
+.button-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
