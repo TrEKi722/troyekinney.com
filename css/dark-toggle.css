@@ -11,6 +11,7 @@
         color: var(--text-color-dark);
     }
     .toggle-button, .home-button {
+        border-color: var(--text-color-dark);
         color: var(--text-color-dark);
     }
 }
@@ -38,6 +39,12 @@ body {
 .dark-mode {
     background-color: var(--bg-color-dark);
     color: var(--text-color-dark);
+}
+
+.dark-mode .toggle-button,
+.dark-mode .home-button {
+    color: var(--text-color-dark);
+    border-color: var(--text-color-dark);
 }
 
 header {
