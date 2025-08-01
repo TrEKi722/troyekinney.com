@@ -9,9 +9,9 @@
     body {
         background-color: var(--bg-color-dark);
         color: var(--text-color-dark);
+    }
     .toggle-button, .home-button {
         color: var(--text-color-dark);
-    }
     }
 }
 
