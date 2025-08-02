@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troy E. Kinney - Work</title>
     <link rel="stylesheet" href="css/dark-toggle.css">
+    <script src="https://kit.fontawesome.com/6ba8d5bf94.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="button-container">
-        <button class="toggle-button" onclick="toggleDarkMode()">Toggle Theme</button>
+        <button id="dark-toggle" class="toggle-button" onclick="toggleDarkMode()">
+            <span id="toggle-icon" class="icon"><i class="fa-regular fa-moon"></i></span> Toggle Theme
+        </button>
         <button class="home-button" onclick="window.location.href = 'https://www.troyekinney.com';">Return Home</button>
     </div>
   
@@ -27,13 +30,44 @@
     </section>    
   
     <script>
-        // Check system preference on load
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.body.classList.add('dark-mode');
+        // Fade CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .icon {
+                transition: opacity 3s;
+                opacity: 1;
+            }
+            .icon.fade {
+                opacity: 0;
+            }
+        `;
+        document.head.appendChild(style);
+
+        function setIcon(isDark) {
+            const iconSpan = document.getElementById('toggle-icon');
+            iconSpan.classList.add('fade');
+            setTimeout(() => {
+                iconSpan.innerHTML = isDark
+                    ? '<i class="fa-regular fa-sun"></i>'
+                    : '<i class="fa-regular fa-moon"></i>';
+                iconSpan.classList.remove('fade');
+            }, 3000);
         }
-    
+
+        // Initial icon
+        window.onload = function() {
+            const isDark = document.body.classList.contains('dark-mode') ||
+                window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setIcon(isDark);
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                setIcon(e.matches);
+            });
+        };
+
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            setIcon(isDark);
         }
     </script>
 </body>
