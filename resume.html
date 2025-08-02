@@ -11,14 +11,30 @@
 </head>
 <body>
     <div class="button-container">
-        <button id="dark-toggle" class="toggle-button" onclick="toggleDarkMode()">
+        <button id="dark-toggle" class="icon-button" onclick="toggleDarkMode()">
             <span id="toggle-icon" class="icon"></span>
         </button>
         <button class="home-button" onclick="window.location.href = 'https://www.troyekinney.com';">Return Home</button>
     </div>
     <header>
         <h1>Troy E. Kinney</h1>
-        <p><a href="mailto:troy@ekinney.com">troy@ekinney.com</a> • (949) 350-3907 • <a href="https://www.troyekinney.com">troyekinney.com</a></p>
+        <div id="socials" class="button-container">
+            <button id="email" class="icon-button" onclick="window.location.href = 'mailto:troy@ekinney.com';">
+                <span id="email-icon" class="icon"><i class="fa-solid fa-envelope"></i></span>
+            </button>
+            <button id="phone" class="icon-button" onclick="window.location.href = 'tel:+19493503907';">
+                <span id="phone-icon" class="icon"><i class="fa-solid fa-phone"></i></span>
+            </button>
+            <button id="website" class="icon-button" onclick="window.location.href = 'https://www.troyekinney.com';">
+                <span id="web-icon" class="icon"><i class="fa-solid fa-globe"></i></span>
+            </button>
+            <button id="linkedIn" class="icon-button" onclick="window.location.href = 'https://www.linkedin.com/in/troy-e-kinney';">
+                <span id="linkedIn-icon" class="icon"><i class="fa-brands fa-square-linkedin"></i></span>
+            </button>
+            <button id="github" class="icon-button" onclick="window.location.href = 'https://www.github.com/treki722';">
+                <span id="github-icon" class="icon"><i class="fa-brands fa-github"></i></span>
+            </button>
+        </div>
     </header>
 
     <section>
@@ -69,7 +85,7 @@
 
     <section>
         <h2>Contact me via LinkedIn</h2>
-        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="HORIZONTAL" data-vanity="troy-e-kinney" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/troy-e-kinney?trk=profile-badge">Troy Kinney</a></div>
+        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="HORIZONTAL" data-vanity="troy-e-kinney" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/troy-e-kinney?trk=profile-badge"></a></div>
     </section>
     
     <script>
