@@ -10,7 +10,7 @@
 <body>
     <div class="button-container">
         <button id="dark-toggle" class="toggle-button" onclick="toggleDarkMode()">
-            <span id="toggle-icon" class="icon"><i class="fa-regular fa-moon"></i></span>
+            <span id="toggle-icon" class="icon"></span>
         </button>
         <button class="home-button" onclick="window.location.href = 'https://www.troyekinney.com';">Return Home</button>
     </div>
@@ -48,7 +48,7 @@
             iconSpan.classList.add('fade');
             setTimeout(() => {
                 iconSpan.innerHTML = isDark
-                    ? '<i class="fa-regular fa-sun"></i>'
+                    ? '<i class="fa-solid fa-sun"></i>'
                     : '<i class="fa-regular fa-moon"></i>';
                 iconSpan.classList.remove('fade');
             }, 300);
