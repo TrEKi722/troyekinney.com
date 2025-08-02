@@ -3,8 +3,10 @@
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="media/T.svg">
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/6ba8d5bf94.js" crossorigin="anonymous"></script>
   <style>
     body {
       background-color: black;
@@ -115,9 +117,17 @@
       <h1 id="title" style="text-align:center;">SOME TEXT</h1>
       <p id="desc" style="text-align:center;"></p>
     </div>
-<!--     <div id="asciiContainer">
+<!--<div id="asciiContainer">
       <iframe class="ascii-art" src=troy.txt>
-    </div> -->
+    </div>-->
+    <div id="socials" class="iconHolder">
+      <button id="email" class="social-button" onclick="window.location.href = 'mailto:troy@ekinney.com';">
+        <span id="email-icon" class="icon"></span>
+      </button>
+      <button id="linkedIn" class="social-button" onclick="window.location.href = 'https://www.linkedin.com/in/troy-kinney-85a516376/';">
+        <span id="linkedIn-icon" class="icon"></span>
+      </button>
+    </div>
     <div id="options" style="display: none; padding:50px;">
       <button onclick="window.location.href = 'https://www.troyekinney.com/work.html';">Work</button>
       <button onclick="window.location.href = 'https://www.troyekinney.com/involvements.html';">Involvements</button>
@@ -209,6 +219,7 @@
         setTimeout(typeDescription, speed);
       } else {
         document.getElementById("options").style.display = "inline-block";
+        document.getElementById("socials").style.display = "flex";
         document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
       }
     }
