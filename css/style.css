@@ -1,9 +1,9 @@
-
+/* Font imports */
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Lexend+Deca:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Coral+Pixels&family=Underdog&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
-
+/* Theme variables */
 :root {
   --bg-color-light: #ffffff;
   --text-color-light: #000000;
@@ -11,17 +11,18 @@
   --text-color-dark: #f0f0f0;
 }
 
+/* Base body styles */
 body {
-  background-color: var(--bg-color-light);
-  color: var(--text-color-light);
+  background-color: black;
+  color: green;
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 350;
   font-size: 25px;
+  padding: 0;
   margin: 0;
-  padding: 45px;
-  transition: background-color 0.3s, color 0.3s;
 }
 
+/* Dark mode styles */
 body.dark-mode {
   background-color: var(--bg-color-dark);
   color: var(--text-color-dark);
@@ -34,45 +35,76 @@ body.dark-mode {
   }
 }
 
+/* Headings */
 h1 {
+  color: green;
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 525;
   font-size: 40px;
-  color: inherit;
 }
 
+/* Links */
 a {
   color: inherit;
   text-decoration: none;
 }
 
+/* Wrapper for centering content */
 .wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
+  width: 100vw;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
 }
 
+/* Button styles */
 #options button,
 button {
   border: 1px solid green;
   font-family: "Funnel Sans", sans-serif;
   font-size: 30px;
   color: green;
-  background-color: black;
   padding: 20px;
-  margin: 10px;
+  margin: 20px;
+  background-color: black;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+/* Social button overrides */
+.social-button {
+  background-color: transparent;
+  border: none !important;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Icon styles */
+.iconHolder {
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  border: none !important;
+}
+
+.icon {
+  font-size: 0.75rem;
+  color: green;
+  border: none !important;
+}
+
+/* Button hover effect */
 button:hover {
   background-color: green;
   color: black;
   box-shadow: 0 0 8px green, 0 0 16px green;
 }
 
+/* ASCII art block */
 #ascii-art {
   font-family: 'Courier Prime', monospace;
   white-space: pre;
@@ -87,6 +119,7 @@ button:hover {
   border: 1px solid green;
 }
 
+/* CRT overlay */
 #foreground-overlay {
   position: fixed;
   top: 0;
@@ -102,6 +135,7 @@ button:hover {
   z-index: 1000;
 }
 
+/* Scanline overlay */
 body::before {
   content: "";
   position: fixed;
@@ -120,23 +154,22 @@ body::before {
   z-index: 999;
 }
 
-.iconHolder {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  border: none !important;
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in forwards;
 }
 
-.icon {
-  font-size: 0.75rem;
-  color: green;
-  border: none !important;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
-.social-button {
-  background-color: transparent;
-  border: none !important;
-  cursor: pointer;
-  padding: 0;
+/* Typewriter effect */
+.typewriter {
+  font-size: 18pt;
+  white-space: pre-wrap;
+  overflow: hidden;
+  display: inline-block;
 }
