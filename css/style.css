@@ -9,7 +9,7 @@ body {
   color: green;
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 350;
-  font-size: 25px;
+  font-size: 1rem;
   padding: 0;
   margin: 0;
 }
@@ -19,7 +19,7 @@ h1 {
   color: green;
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 525;
-  font-size: 40px;
+  font-size: 2rem;
 }
 
 /* Links */
@@ -30,60 +30,80 @@ a {
 
 /* Wrapper for centering content */
 .wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  width: 100vw;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  width: 100vw;
 }
 
-/* Button styles */
+/* Button container */
+
+#options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Button styles (options buttons) */
 #options button,
-button {
-  border: 1px solid green;
+button:not(.icon-button):not(.social-button) {
+  flex: 1 1 200px; /* grow/shrink, min width 200px */
+  max-width: 300px;
+  border: 0.1rem solid green;
   font-family: "Funnel Sans", sans-serif;
-  font-size: 30px;
+  font-size: 1.25rem; /* roughly 20px */
   color: green;
-  padding: 20px;
-  margin: 20px;
+  padding: 1rem;
+  margin: 0.5rem;
   background-color: black;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-align: center;
 }
 
-/* Social button overrides */
-.social-button {
+/* Icon button styles */
+.icon-button, .social-button {
   background-color: transparent;
   border: none !important;
   cursor: pointer;
   padding: 0;
+  transition: none;
 }
 
 /* Icon styles */
-.iconHolder {
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  border: none !important;
-}
-
 .icon {
   font-size: 1.5rem;
   color: green;
   border: none !important;
+  transition: font-size 0.2s;
 }
 
-/* Button hover effect */
-button:hover {
+/* Options button hover effect */
+#options button:hover,
+button:not(.icon-button):not(.social-button):hover {
   background-color: green;
   color: black;
   box-shadow: 0 0 8px green, 0 0 16px green;
 }
 
-/* ASCII art block */
+/* Icon button hover effect: only icon grows, cursor stays pointer */
+.icon-button:hover .icon,
+.social-button:hover .icon {
+  font-size: 1.8rem;
+}
+
+.icon-button:hover,
+.social-button:hover {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* ASCII art block
 #ascii-art {
   font-family: 'Courier Prime', monospace;
   white-space: pre;
@@ -91,12 +111,12 @@ button:hover {
   max-width: 250ch;
   max-height: 80vh;
   font-size: 4px;
-  line-height: 3.5px;
+  line-height: .53px;
   margin: 0 auto;
   display: block;
-  padding: 20px;
+  padding: 1rem;
   border: 1px solid green;
-}
+} */
 
 /* CRT overlay */
 #foreground-overlay {
@@ -147,7 +167,7 @@ body::before {
 
 /* Typewriter effect */
 .typewriter {
-  font-size: 18pt;
+  font-size: 1.2rem;
   white-space: pre-wrap;
   overflow: hidden;
   display: inline-block;
