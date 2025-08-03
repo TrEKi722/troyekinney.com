@@ -113,20 +113,23 @@
             }, 600);
         }
 
-        // Initial icon
+        function applyTheme(isDark) {
+            document.body.classList.toggle('dark-mode', isDark);
+            setIcon(isDark);
+        }
+        // Initial theme and icon
         window.onload = function() {
             const isDark = document.body.classList.contains('dark-mode') ||
                 window.matchMedia('(prefers-color-scheme: dark)').matches;
             setIcon(isDark);
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                setIcon(e.matches);
+                applyTheme(e.matches);
             });
         };
 
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
-            setIcon(isDark);
+            applyTheme(isDark);
         }
     </script>
 </body>

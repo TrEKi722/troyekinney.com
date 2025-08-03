@@ -10,7 +10,7 @@
         background-color: var(--bg-color-dark);
         color: var(--text-color-dark);
     }
-    .toggle-button {
+    .icon-button {
         color: var(--text-color-dark);
     } 
     .home-button {
@@ -55,7 +55,7 @@ body {
     color: var(--text-color-dark);
 }
 
-.dark-mode .toggle-button,
+.dark-mode .icon-button,
 .dark-mode .home-button {
     color: var(--text-color-dark);
     border-color: var(--text-color-dark);
