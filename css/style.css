@@ -9,7 +9,7 @@ body {
   color: green;
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 350;
-  font-size: 1rem;
+  font-size: 1.2rem;
   padding: 0;
   margin: 0;
 }
@@ -19,7 +19,7 @@ h1 {
   color: green;
   font-family: 'Lexend Deca', sans-serif;
   font-weight: 525;
-  font-size: 2rem;
+  font-size: 2.4rem;
 }
 
 /* Links */
@@ -56,7 +56,7 @@ button:not(.icon-button):not(.social-button) {
   max-width: 300px;
   border: 0.1rem solid green;
   font-family: "Funnel Sans", sans-serif;
-  font-size: 1.25rem; /* roughly 20px */
+  font-size: 1.5rem; /* roughly 20px */
   color: green;
   padding: 1rem;
   margin: 0.5rem;
@@ -77,7 +77,7 @@ button:not(.icon-button):not(.social-button) {
 
 /* Icon styles */
 .icon {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: green;
   border: none !important;
   transition: font-size 0.2s;
@@ -94,7 +94,7 @@ button:not(.icon-button):not(.social-button):hover {
 /* Icon button hover effect: only icon grows, cursor stays pointer */
 .icon-button:hover .icon,
 .social-button:hover .icon {
-  font-size: 1.8rem;
+  font-size: 2.1rem;
 }
 
 .icon-button:hover,
