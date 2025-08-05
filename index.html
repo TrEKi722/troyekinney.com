@@ -122,16 +122,16 @@
         document.getElementById("desc").innerHTML = document.getElementById("desc").innerHTML.slice(0, -1);
         setTimeout(() => {
           document.getElementById("email").style.display = "flex";
-        }, 300);
-        setTimeout(() => {
-          document.getElementById("linkedIn").style.display = "flex";
-        }, 300);
-        setTimeout(() => {
-          document.getElementById("github").style.display = "flex";
-        }, 300);
-        setTimeout(() => {
-          document.getElementById("options").style.display = "inline-block";
-        }, 300);
+          setTimeout(() => {
+            document.getElementById("linkedIn").style.display = "flex";
+            setTimeout(() => {
+              document.getElementById("github").style.display = "flex";
+              setTimeout(() => {
+                document.getElementById("options").style.display = "inline-block";
+              }, 200);
+            }, 200);
+          }, 200);
+        }, 200);
       }
     }
 
