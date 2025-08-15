@@ -5,20 +5,6 @@
     --text-color-dark: #f0f0f0;
 }
 
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: var(--bg-color-dark);
-        color: var(--text-color-dark);
-    }
-    .icon-button {
-        color: var(--text-color-dark);
-    } 
-    .home-button {
-        border-color: var(--text-color-dark);
-        color: var(--text-color-dark);
-    }
-}
-
 .icon-button {
     padding: 0.5rem 1rem;
     background: none;
@@ -88,6 +74,6 @@ section {
 
 .socials-container {
     display: flex;
-    margin: 1rem;
+    margin-bottom: 0.5rem;
     font-size:0.80rem;
 }
