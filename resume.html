@@ -140,7 +140,7 @@
 
         function toggleDarkMode() {
             const isDark = document.body.classList.contains('dark-mode');
-            applyTheme(isDark);
+            applyTheme(!isDark); // Toggle the theme!
         }
     </script>
 </body>
