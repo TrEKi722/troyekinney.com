@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hi! I'm Troy, a high school developer and nerd. This is my personal portfolio site, please look around!"/>
   <title>Troy E. Kinney</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="media/TK.svg">
@@ -64,6 +65,9 @@
       if (internalRef) {
         const titleEl = document.getElementById("title");
         const descEl = document.getElementById("desc");
+        const emailEl = document.getElementById("email");
+        const linkedEl = document.getElementById("linkedIn");
+        const gitEl = document.getElementById("github");
         const optionsEl = document.getElementById("options");
     
         titleEl.textContent = titleText;
@@ -71,6 +75,9 @@
         
         titleEl.classList.add("fade-in");
         descEl.classList.add("fade-in");
+        emailEl.style.display = "inline-block";        
+        linkedEl.style.display = "inline-block";
+        gitEl.style.display = "inline-block";
         optionsEl.style.display = "inline-block";
         optionsEl.classList.add("fade-in");
       } else {
@@ -138,7 +145,7 @@
     function contentDeterminer(section) {
       contentIndex = 0;
       document.getElementById("content").innerHTML = "";
-      document.getElementById("content").style.display = "inline-block";
+      document.getElementById("content").style.display = "flex";
       if (section === "philosophy") {
         typeContent(philosophyText);
       } else if (section === "references") {

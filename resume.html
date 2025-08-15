@@ -19,7 +19,7 @@
     <header>
         <h1>Troy E. Kinney</h1>
     </header>
-    <div id="socials" class="button-container" style="margin-bottom: 2rem;">
+    <div id="socials" class="socials-container" style="margin-bottom: 2rem;">
         <button id="email" class="icon-button" onclick="window.location.href = 'mailto:troy@ekinney.com';">
             <span id="email-icon" class="icon"><i class="fa-solid fa-envelope"></i></span>
         </button>
@@ -119,11 +119,12 @@
         }
         // Initial theme and icon
         window.onload = function() {
-            const isDark = document.body.classList.contains('dark-mode') ||
-                window.matchMedia('(prefers-color-scheme: dark)').matches;
-            setIcon(isDark);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.toggle('dark-mode', prefersDark);
+            setIcon(prefersDark);
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                applyTheme(e.matches);
+                document.body.classList.toggle('dark-mode', e.matches);
+                setIcon(e.matches);
             });
         };
 
