@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="button-container">
-        <button id="dark-toggle" class="toggle-button" onclick="toggleDarkMode()">
+        <button id="dark-toggle" class="icon-button" onclick="toggleDarkMode()">
             <span id="toggle-icon" class="icon"></span>
         </button>
         <button class="home-button" onclick="window.location.href = 'https://www.troyekinney.com';">Return Home</button>
@@ -38,7 +38,7 @@
         const style = document.createElement('style');
         style.innerHTML = `
             .icon {
-                transition: opacity 0.6s;
+                transition: opacity 0.3s;
                 opacity: 1;
             }
             .icon.fade {
@@ -55,7 +55,7 @@
                     ? '<i class="fa-solid fa-sun"></i>'
                     : '<i class="fa-regular fa-moon"></i>';
                 iconSpan.classList.remove('fade');
-            }, 600);
+            }, 300);
         }
 
         function applyTheme(isDark) {
