@@ -33,9 +33,9 @@
     <div id="options" style="display: none; margin-top:15px; margin:30px;">
       <button onclick="window.location.href = 'https://www.troyekinney.com/work.html';">Work</button>
       <button onclick="window.location.href = 'https://www.troyekinney.com/involvements.html';">Involvements</button>
-      <button onclick="contentDeterminer('philosphy')">Philosophy</button>
+      <button onclick="contentDeterminer('philosophy')">Philosophy</button>
       <button onclick="window.location.href = 'https://www.troyekinney.com/resume.html';">Resume</button>
-      <button onclick="contentDeterminer('references')">References</button>
+      <!-- <button onclick="contentDeterminer('references')">References</button> -->
       <script src="https://kit.fontawesome.com/6ba8d5bf94.js" crossorigin="anonymous"></script>
     </div>
     <div id="contentContainer">
@@ -145,7 +145,7 @@
     function contentDeterminer(section) {
       contentIndex = 0;
       document.getElementById("content").innerHTML = "";
-      document.getElementById("content").style.display = "flex";
+      document.getElementById("content").style.display = "block";
       if (section === "philosophy") {
         typeContent(philosophyText);
       } else if (section === "references") {
