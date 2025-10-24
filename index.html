@@ -159,7 +159,7 @@
         container.innerHTML = container.innerHTML.slice(0, -1);
         container.innerHTML += (content[contentIndex] === "\n" ? "<br>" : content[contentIndex]) + "_";
         contentIndex++;
-        setTimeout(typeContent, speed);
+        setTimeout(typeContent(content), speed);
       } else {
         document.getElementById("content").innerHTML = document.getElementById("content").innerHTML.slice(0, -1);
       }
