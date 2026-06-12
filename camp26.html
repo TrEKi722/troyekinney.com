@@ -232,55 +232,11 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/aws4fetch@1/dist/index.min.js"></script>
   <script>
-    const R2_BUCKET = 'camp-photos';
-    const R2_ENDPOINT = 'https://bb2bc0a4ee306ff914cb179070606049.r2.cloudflarestorage.com';
+    const R2_ENDPOINT = 'https://bb2bc0a4ee306ff914cb179070606049.r2.cloudflarestorage.com/camp-photos';
     
     let imageUrls = [];
     let currentImageIndex = 0;
-
-    const credentials = {
-      accessKeyId: '2f52de5aa15776658be74a8bfbdf9d89',
-      secretAccessKey: 'de4dd009d49289149764f59149edcba26c1b4645720d907404618ab6c09c0229'
-    };
-
-    async function listR2Objects() {
-      const aws4 = new AWS4Fetch.AwsClient({
-        accessKeyId: credentials.accessKeyId,
-        secretAccessKey: credentials.secretAccessKey
-      });
-
-      const url = `${R2_ENDPOINT}/${R2_BUCKET}/?list-type=2`;
-      const response = await aws4.fetch(url);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to list objects: ${response.statusText}`);
-      }
-
-      return response.text();
-    }
-
-    function parseXML(xmlString) {
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-      
-      if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
-        throw new Error('Failed to parse XML response');
-      }
-
-      const contents = xmlDoc.getElementsByTagName('Contents');
-      const files = [];
-
-      for (let i = 0; i < contents.length; i++) {
-        const key = contents[i].getElementsByTagName('Key')[0]?.textContent;
-        if (key) {
-          files.push(key);
-        }
-      }
-
-      return files;
-    }
 
     async function loadGallery() {
       try {
@@ -288,8 +244,30 @@
         const errorEl = document.getElementById('error');
         const galleryEl = document.getElementById('gallery');
 
-        const xmlResponse = await listR2Objects();
-        const files = parseXML(xmlResponse);
+        // Fetch list of objects from R2
+        const response = await fetch(`${R2_ENDPOINT}/?list-type=2`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to list objects: ${response.statusText}`);
+        }
+
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        
+        if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+          throw new Error('Failed to parse response. Bucket may not be publicly accessible.');
+        }
+
+        const contents = xmlDoc.getElementsByTagName('Contents');
+        const files = [];
+
+        for (let i = 0; i < contents.length; i++) {
+          const key = contents[i].getElementsByTagName('Key')[0]?.textContent;
+          if (key) {
+            files.push(key);
+          }
+        }
 
         // Filter for image files and generate URLs
         imageUrls = files
@@ -298,7 +276,7 @@
             return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(keyLower);
           })
           .map(key => {
-            return `${R2_ENDPOINT}/${R2_BUCKET}/${key}`;
+            return `${R2_ENDPOINT}/${key}`;
           });
 
         if (imageUrls.length === 0) {
