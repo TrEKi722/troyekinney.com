@@ -17,42 +17,20 @@ export default {
     }
 
     try {
-      // Fetch directory listing from cmphts.ekinney.com with browser User-Agent
-      const response = await fetch('https://cmphts.ekinney.com/', {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        },
-        redirect: 'follow'
-      });
+      // List all objects in the R2 bucket
+      const list = await env.CAMP_PHOTOS.list();
       
-      if (!response.ok) {
-        return new Response(
-          JSON.stringify({ error: `Failed to fetch: ${response.statusText}` }),
-          { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
-        );
-      }
-
-      const html = await response.text();
-      
-      // Parse HTML to extract image links using regex
-      const imageFiles: string[] = [];
-      // Match href="filename" or href='filename' patterns
-      const hrefRegex = /href=["']([^"']+)["']/g;
-      let match;
-      
-      while ((match = hrefRegex.exec(html)) !== null) {
-        const href = match[1];
-        const lowerHref = href.toLowerCase();
-        
-        // Check if it's an image file
-        if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(lowerHref)) {
-          imageFiles.push(href);
-        }
-      }
+      // Filter for image files
+      const imageFiles = list.objects
+        .map((obj: any) => obj.key)
+        .filter((key: string) => {
+          const keyLower = key.toLowerCase();
+          return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(keyLower);
+        });
 
       if (imageFiles.length === 0) {
         return new Response(
-          JSON.stringify({ error: 'No image files found. HTML length: ' + html.length }),
+          JSON.stringify({ error: 'No image files found' }),
           { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
         );
       }
