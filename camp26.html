@@ -166,6 +166,26 @@
       color: #00ff00;
     }
 
+    .modal-download {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: black;
+      background-color: green;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      z-index: 2;
+    }
+
+    .modal-download:hover {
+      background-color: #00ff00;
+      color: black;
+    }
+
     .modal-nav {
       position: absolute;
       top: 50%;
@@ -271,6 +291,7 @@
   <!-- Modal for fullscreen viewing -->
   <div id="imageModal" class="modal">
     <div class="modal-content">
+      <a id="modalDownload" class="modal-download" href="#" download target="_blank">Download</a>
       <span class="modal-close" onclick="closeModal()">&times;</span>
       <span class="modal-nav modal-prev" onclick="previousImage()">&#10094;</span>
       <img id="modalImage" src="" alt="Gallery image">
@@ -342,7 +363,9 @@
 
     function openModal(index) {
       currentImageIndex = index;
-      document.getElementById('modalImage').src = imageUrls[index];
+      const imageUrl = imageUrls[index];
+      document.getElementById('modalImage').src = imageUrl;
+      document.getElementById('modalDownload').href = imageUrl;
       document.getElementById('imageModal').classList.add('active');
     }
 
