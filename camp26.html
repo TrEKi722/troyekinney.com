@@ -244,40 +244,23 @@
         const errorEl = document.getElementById('error');
         const galleryEl = document.getElementById('gallery');
 
-        // Fetch list of objects from R2
-        const response = await fetch(`${R2_ENDPOINT}/?list-type=2`);
+        // Fetch list of images from the worker
+        const response = await fetch('/api/gallery');
         
         if (!response.ok) {
-          throw new Error(`Failed to list objects: ${response.statusText}`);
+          throw new Error(`Failed to list images: ${response.statusText}`);
         }
 
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        const data = await response.json();
         
-        if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
-          throw new Error('Failed to parse response. Bucket may not be publicly accessible.');
+        if (!data.images || data.images.length === 0) {
+          throw new Error('No images found');
         }
 
-        const contents = xmlDoc.getElementsByTagName('Contents');
-        const files = [];
-
-        for (let i = 0; i < contents.length; i++) {
-          const key = contents[i].getElementsByTagName('Key')[0]?.textContent;
-          if (key) {
-            files.push(key);
-          }
-        }
-
-        // Filter for image files and generate URLs
-        imageUrls = files
-          .filter(key => {
-            const keyLower = key.toLowerCase();
-            return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(keyLower);
-          })
-          .map(key => {
-            return `${R2_ENDPOINT}/${key}`;
-          });
+        // Generate URLs for each image
+        imageUrls = data.images.map(key => {
+          return `${R2_ENDPOINT}/${key}`;
+        });
 
         if (imageUrls.length === 0) {
           throw new Error('No image files found in bucket');
