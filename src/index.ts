@@ -17,16 +17,33 @@ export default {
     }
 
     try {
-      // List all objects in the R2 bucket
-      const list = await env.CAMP_PHOTOS.list();
+      // Fetch directory listing from cmphts.ekinney.com
+      const response = await fetch('https://cmphts.ekinney.com/');
       
-      // Filter for image files
-      const imageFiles = list.objects
-        .map((obj: any) => obj.key)
-        .filter((key: string) => {
-          const keyLower = key.toLowerCase();
-          return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(keyLower);
-        });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch images: ${response.statusText}`);
+      }
+
+      const html = await response.text();
+      
+      // Parse HTML to extract image links
+      const imageFiles: string[] = [];
+      const linkRegex = /href=["']([^"']+)["']/g;
+      let match;
+      
+      while ((match = linkRegex.exec(html)) !== null) {
+        const href = match[1];
+        const lowerHref = href.toLowerCase();
+        
+        // Check if it's an image file and not a directory
+        if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(lowerHref) && !href.startsWith('?')) {
+          imageFiles.push(href);
+        }
+      }
+
+      if (imageFiles.length === 0) {
+        throw new Error('No image files found');
+      }
 
       // Return as JSON with CORS headers
       return new Response(JSON.stringify({ images: imageFiles }), {
@@ -37,9 +54,9 @@ export default {
         },
       });
     } catch (error) {
-      console.error('Error listing objects:', error);
+      console.error('Error listing images:', error);
       return new Response(
-        JSON.stringify({ error: 'Failed to list images' }),
+        JSON.stringify({ error: `Failed to list images: ${error}` }),
         {
           status: 500,
           headers: {

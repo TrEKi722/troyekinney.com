@@ -233,7 +233,7 @@
   </div>
 
   <script>
-    const R2_ENDPOINT = 'https://bb2bc0a4ee306ff914cb179070606049.r2.cloudflarestorage.com/camp-photos';
+    const IMAGE_ENDPOINT = 'https://cmphts.ekinney.com';
     
     let imageUrls = [];
     let currentImageIndex = 0;
@@ -245,7 +245,7 @@
         const galleryEl = document.getElementById('gallery');
 
         // Fetch list of images from the worker
-        const response = await fetch('https://camp-gallery.722kinney.workers.dev');
+        const response = await fetch('https://camp-gallery.722kinney.workers.dev/');
         
         if (!response.ok) {
           throw new Error(`Failed to list images: ${response.statusText}`);
@@ -259,7 +259,7 @@
 
         // Generate URLs for each image
         imageUrls = data.images.map(key => {
-          return `${R2_ENDPOINT}/${key}`;
+          return `${IMAGE_ENDPOINT}/${key}`;
         });
 
         if (imageUrls.length === 0) {
