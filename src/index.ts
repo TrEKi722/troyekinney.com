@@ -20,23 +20,23 @@ export default {
       // List all objects in the R2 bucket
       const list = await env.CAMP_PHOTOS.list();
       
-      // Filter for image files
-      const imageFiles = list.objects
+      // Filter for supported media files
+      const mediaFiles = list.objects
         .map((obj: any) => obj.key)
         .filter((key: string) => {
           const keyLower = key.toLowerCase();
-          return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(keyLower);
+          return /\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|mov)$/i.test(keyLower);
         });
 
-      if (imageFiles.length === 0) {
+      if (mediaFiles.length === 0) {
         return new Response(
-          JSON.stringify({ error: 'No image files found' }),
+          JSON.stringify({ error: 'No media files found' }),
           { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
         );
       }
 
       // Return as JSON with CORS headers
-      return new Response(JSON.stringify({ images: imageFiles }), {
+      return new Response(JSON.stringify({ media: mediaFiles }), {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',

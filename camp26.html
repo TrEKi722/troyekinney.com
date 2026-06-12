@@ -302,8 +302,14 @@
   <script>
     const IMAGE_ENDPOINT = 'https://cmphts.ekinney.com';
     
-    let imageUrls = [];
-    let currentImageIndex = 0;
+    let mediaItems = [];
+    let currentMediaIndex = 0;
+
+    function getMediaType(key) {
+      const lowerKey = key.toLowerCase();
+      if (/\.(mp4|webm|mov)$/i.test(lowerKey)) return 'video';
+      return 'image';
+    }
 
     async function loadGallery() {
       try {
@@ -311,46 +317,61 @@
         const errorEl = document.getElementById('error');
         const galleryEl = document.getElementById('gallery');
 
-        // Fetch list of images from the worker
+        // Fetch list of media from the worker
         const response = await fetch('https://camp-gallery.722kinney.workers.dev/');
         
         if (!response.ok) {
           const errorText = await response.text();
           console.error('Worker error response:', errorText);
-          throw new Error(`Failed to list images: ${response.status} ${errorText}`);
+          throw new Error(`Failed to list media: ${response.status} ${errorText}`);
         }
 
         const data = await response.json();
         
-        if (!data.images || data.images.length === 0) {
-          throw new Error('No images found');
+        if (!data.media || data.media.length === 0) {
+          throw new Error('No media found');
         }
 
-        // Generate URLs for each image
-        imageUrls = data.images.map(key => {
-          return `${IMAGE_ENDPOINT}/${key}`;
-        });
+        // Generate URLs for each media item
+        mediaItems = data.media.map(key => ({
+          url: `${IMAGE_ENDPOINT}/${key}`,
+          type: getMediaType(key),
+        }));
 
-        if (imageUrls.length === 0) {
-          throw new Error('No image files found in bucket');
+        if (mediaItems.length === 0) {
+          throw new Error('No media files found in bucket');
         }
 
         loadingEl.style.display = 'none';
         galleryEl.innerHTML = '';
 
         // Create gallery items
-        imageUrls.forEach((url, index) => {
-          const item = document.createElement('div');
-          item.className = 'gallery-item';
-          item.onclick = () => openModal(index);
+        mediaItems.forEach((item, index) => {
+          const mediaItem = document.createElement('div');
+          mediaItem.className = 'gallery-item';
+          mediaItem.onclick = () => openModal(index);
 
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = `Gallery image ${index + 1}`;
-          img.loading = 'lazy';
+          if (item.type === 'video') {
+            const video = document.createElement('video');
+            video.src = item.url;
+            video.muted = true;
+            video.loop = true;
+            video.autoplay = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
+            mediaItem.appendChild(video);
+          } else {
+            const img = document.createElement('img');
+            img.src = item.url;
+            img.alt = `Gallery item ${index + 1}`;
+            img.loading = 'lazy';
+            mediaItem.appendChild(img);
+          }
 
-          item.appendChild(img);
-          galleryEl.appendChild(item);
+          galleryEl.appendChild(mediaItem);
         });
 
       } catch (error) {
@@ -362,10 +383,8 @@
     }
 
     function openModal(index) {
-      currentImageIndex = index;
-      const imageUrl = imageUrls[index];
-      document.getElementById('modalImage').src = imageUrl;
-      document.getElementById('modalDownload').href = imageUrl;
+      currentMediaIndex = index;
+      updateModalItem();
       document.getElementById('imageModal').classList.add('active');
     }
 
@@ -373,20 +392,56 @@
       document.getElementById('imageModal').classList.remove('active');
     }
 
-    function updateModalImage() {
-      const imageUrl = imageUrls[currentImageIndex];
-      document.getElementById('modalImage').src = imageUrl;
-      document.getElementById('modalDownload').href = imageUrl;
+    function updateModalItem() {
+      const item = mediaItems[currentMediaIndex];
+      const modalImage = document.getElementById('modalImage');
+      const modalDownload = document.getElementById('modalDownload');
+      const modalContent = document.querySelector('.modal-content');
+
+      modalDownload.href = item.url;
+
+      if (item.type === 'video') {
+        modalImage.style.display = 'none';
+
+        let modalVideo = document.getElementById('modalVideo');
+        if (!modalVideo) {
+          modalVideo = document.createElement('video');
+          modalVideo.id = 'modalVideo';
+          modalVideo.controls = true;
+          modalVideo.playsInline = true;
+          modalVideo.style.width = '100%';
+          modalVideo.style.maxHeight = '85vh';
+          modalVideo.style.objectFit = 'contain';
+          modalVideo.style.display = 'block';
+          modalContent.insertBefore(modalVideo, modalImage);
+        }
+
+        if (modalVideo.src !== item.url) {
+          modalVideo.src = item.url;
+        }
+        modalVideo.style.display = 'block';
+      } else {
+        const modalVideo = document.getElementById('modalVideo');
+        if (modalVideo) {
+          modalVideo.pause();
+          modalVideo.style.display = 'none';
+          modalVideo.removeAttribute('src');
+          modalVideo.load();
+        }
+
+        modalImage.src = item.url;
+        modalImage.style.display = 'block';
+      }
     }
 
     function nextImage() {
-      currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
-      updateModalImage();
+      currentMediaIndex = (currentMediaIndex + 1) % mediaItems.length;
+      updateModalItem();
     }
 
     function previousImage() {
-      currentImageIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
-      updateModalImage();
+      currentMediaIndex = (currentMediaIndex - 1 + mediaItems.length) % mediaItems.length;
+      updateModalItem();
     }
 
     // Keyboard navigation for modal
