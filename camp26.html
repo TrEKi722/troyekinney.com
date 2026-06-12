@@ -373,14 +373,20 @@
       document.getElementById('imageModal').classList.remove('active');
     }
 
+    function updateModalImage() {
+      const imageUrl = imageUrls[currentImageIndex];
+      document.getElementById('modalImage').src = imageUrl;
+      document.getElementById('modalDownload').href = imageUrl;
+    }
+
     function nextImage() {
       currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
-      document.getElementById('modalImage').src = imageUrls[currentImageIndex];
+      updateModalImage();
     }
 
     function previousImage() {
       currentImageIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
-      document.getElementById('modalImage').src = imageUrls[currentImageIndex];
+      updateModalImage();
     }
 
     // Keyboard navigation for modal
