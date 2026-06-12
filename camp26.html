@@ -13,7 +13,14 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    @media (min-width: 640px) {
+      .gallery-container {
+        padding: 2rem;
+      }
     }
 
     .gallery-header {
@@ -34,9 +41,31 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
       margin-bottom: 3rem;
+      width: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .gallery-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 2rem;
+      }
     }
 
     .gallery-item {
@@ -176,14 +205,18 @@
       font-size: 1rem;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 640px) {
       .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
       }
 
       .gallery-header h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+      }
+
+      .gallery-header p {
+        font-size: 0.95rem;
       }
 
       .modal-content {
