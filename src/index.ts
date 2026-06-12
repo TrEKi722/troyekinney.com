@@ -21,28 +21,35 @@ export default {
       const response = await fetch('https://cmphts.ekinney.com/');
       
       if (!response.ok) {
-        throw new Error(`Failed to fetch images: ${response.statusText}`);
+        return new Response(
+          JSON.stringify({ error: `Failed to fetch: ${response.statusText}` }),
+          { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
+        );
       }
 
       const html = await response.text();
       
-      // Parse HTML to extract image links
+      // Parse HTML to extract image links using regex
       const imageFiles: string[] = [];
-      const linkRegex = /href=["']([^"']+)["']/g;
+      // Match href="filename" or href='filename' patterns
+      const hrefRegex = /href=["']([^"']+)["']/g;
       let match;
       
-      while ((match = linkRegex.exec(html)) !== null) {
+      while ((match = hrefRegex.exec(html)) !== null) {
         const href = match[1];
         const lowerHref = href.toLowerCase();
         
-        // Check if it's an image file and not a directory
-        if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(lowerHref) && !href.startsWith('?')) {
+        // Check if it's an image file
+        if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(lowerHref)) {
           imageFiles.push(href);
         }
       }
 
       if (imageFiles.length === 0) {
-        throw new Error('No image files found');
+        return new Response(
+          JSON.stringify({ error: 'No image files found. HTML length: ' + html.length }),
+          { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
+        );
       }
 
       // Return as JSON with CORS headers
@@ -53,10 +60,10 @@ export default {
           'Cache-Control': 'max-age=3600',
         },
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error listing images:', error);
       return new Response(
-        JSON.stringify({ error: `Failed to list images: ${error}` }),
+        JSON.stringify({ error: `Exception: ${error?.message || String(error)}` }),
         {
           status: 500,
           headers: {
