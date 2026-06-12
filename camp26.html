@@ -245,7 +245,7 @@
         const galleryEl = document.getElementById('gallery');
 
         // Fetch list of images from the worker
-        const response = await fetch('/api/gallery');
+        const response = await fetch('https://camp-gallery.722kinney.workers.dev');
         
         if (!response.ok) {
           throw new Error(`Failed to list images: ${response.statusText}`);
