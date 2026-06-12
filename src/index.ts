@@ -17,8 +17,13 @@ export default {
     }
 
     try {
-      // Fetch directory listing from cmphts.ekinney.com
-      const response = await fetch('https://cmphts.ekinney.com/');
+      // Fetch directory listing from cmphts.ekinney.com with browser User-Agent
+      const response = await fetch('https://cmphts.ekinney.com/', {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        },
+        redirect: 'follow'
+      });
       
       if (!response.ok) {
         return new Response(
