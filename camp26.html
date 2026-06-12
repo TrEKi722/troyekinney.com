@@ -1,0 +1,374 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Camp 26 Photo Gallery - Explore memories from Camp 26"/>
+  <title>Camp 26 Gallery - Troy E. Kinney</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-toggle.css">
+  <link rel="icon" type="image/svg+xml" href="media/TK.svg">
+  <style>
+    .gallery-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2.5rem;
+    }
+
+    .gallery-header p {
+      color: #888;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid green;
+      aspect-ratio: 1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: #111;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      border: 1px solid green;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: green;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: #00ff00;
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      color: green;
+      font-size: 30px;
+      cursor: pointer;
+      padding: 10px 20px;
+      user-select: none;
+      transition: color 0.2s ease;
+    }
+
+    .modal-nav:hover {
+      color: #00ff00;
+    }
+
+    .modal-prev {
+      left: 20px;
+      transform: translateY(-50%);
+    }
+
+    .modal-next {
+      right: 20px;
+      transform: translateY(-50%);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: green;
+      font-size: 1.2rem;
+    }
+
+    .error {
+      text-align: center;
+      padding: 2rem;
+      color: #ff6b6b;
+      font-size: 1.1rem;
+      border: 1px solid #ff6b6b;
+      border-radius: 4px;
+      margin: 1rem 0;
+    }
+
+    .back-button {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-button button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+
+      .gallery-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 85vh;
+      }
+
+      .modal-close {
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+      }
+
+      .modal-nav {
+        padding: 5px 10px;
+        font-size: 20px;
+      }
+
+      .modal-prev {
+        left: 10px;
+      }
+
+      .modal-next {
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="gallery-container">
+      <div id="loading" class="loading">Loading images...</div>
+      <div id="error" class="error" style="display: none;"></div>
+      <div id="gallery" class="gallery-grid"></div>
+    </div>
+  </div>
+
+  <!-- Modal for fullscreen viewing -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <span class="modal-nav modal-prev" onclick="previousImage()">&#10094;</span>
+      <img id="modalImage" src="" alt="Gallery image">
+      <span class="modal-nav modal-next" onclick="nextImage()">&#10095;</span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/aws4fetch@1/dist/index.min.js"></script>
+  <script>
+    const R2_BUCKET = 'camp-photos';
+    const R2_ENDPOINT = 'https://bb2bc0a4ee306ff914cb179070606049.r2.cloudflarestorage.com';
+    
+    let imageUrls = [];
+    let currentImageIndex = 0;
+
+    const credentials = {
+      accessKeyId: '2f52de5aa15776658be74a8bfbdf9d89',
+      secretAccessKey: 'de4dd009d49289149764f59149edcba26c1b4645720d907404618ab6c09c0229'
+    };
+
+    async function listR2Objects() {
+      const aws4 = new AWS4Fetch.AwsClient({
+        accessKeyId: credentials.accessKeyId,
+        secretAccessKey: credentials.secretAccessKey
+      });
+
+      const url = `${R2_ENDPOINT}/${R2_BUCKET}/?list-type=2`;
+      const response = await aws4.fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to list objects: ${response.statusText}`);
+      }
+
+      return response.text();
+    }
+
+    function parseXML(xmlString) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+      
+      if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+        throw new Error('Failed to parse XML response');
+      }
+
+      const contents = xmlDoc.getElementsByTagName('Contents');
+      const files = [];
+
+      for (let i = 0; i < contents.length; i++) {
+        const key = contents[i].getElementsByTagName('Key')[0]?.textContent;
+        if (key) {
+          files.push(key);
+        }
+      }
+
+      return files;
+    }
+
+    async function loadGallery() {
+      try {
+        const loadingEl = document.getElementById('loading');
+        const errorEl = document.getElementById('error');
+        const galleryEl = document.getElementById('gallery');
+
+        const xmlResponse = await listR2Objects();
+        const files = parseXML(xmlResponse);
+
+        // Filter for image files and generate URLs
+        imageUrls = files
+          .filter(key => {
+            const keyLower = key.toLowerCase();
+            return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(keyLower);
+          })
+          .map(key => {
+            return `${R2_ENDPOINT}/${R2_BUCKET}/${key}`;
+          });
+
+        if (imageUrls.length === 0) {
+          throw new Error('No image files found in bucket');
+        }
+
+        loadingEl.style.display = 'none';
+        galleryEl.innerHTML = '';
+
+        // Create gallery items
+        imageUrls.forEach((url, index) => {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.onclick = () => openModal(index);
+
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = `Gallery image ${index + 1}`;
+          img.loading = 'lazy';
+
+          item.appendChild(img);
+          galleryEl.appendChild(item);
+        });
+
+      } catch (error) {
+        console.error('Error loading gallery:', error);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = `Error loading gallery: ${error.message}`;
+      }
+    }
+
+    function openModal(index) {
+      currentImageIndex = index;
+      document.getElementById('modalImage').src = imageUrls[index];
+      document.getElementById('imageModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+      document.getElementById('modalImage').src = imageUrls[currentImageIndex];
+    }
+
+    function previousImage() {
+      currentImageIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
+      document.getElementById('modalImage').src = imageUrls[currentImageIndex];
+    }
+
+    // Keyboard navigation for modal
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('imageModal').classList.contains('active')) {
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') previousImage();
+        if (e.key === 'Escape') closeModal();
+      }
+    });
+
+    // Close modal when clicking outside the image
+    document.getElementById('imageModal').addEventListener('click', (e) => {
+      if (e.target.id === 'imageModal') {
+        closeModal();
+      }
+    });
+
+    // Load gallery on page load
+    document.addEventListener('DOMContentLoaded', loadGallery);
+  </script>
+</body>
+</html>
